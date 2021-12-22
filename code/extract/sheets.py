@@ -18,13 +18,13 @@ credentials = service_account.Credentials.from_service_account_file(
 
 # The ID and range of a sample spreadsheet.
 SPREADSHEET_ID = ''
-SPREADSHEET_RANGE = 'feed!A1:G2561'
+SPREADSHEET_RANGE = 'feed!A1:G2'
 service = build('sheets', 'v4', credentials=CREDS)
 
 # Call the Sheets API
 sheet = service.spreadsheets()
 result = sheet.values().get(spreadsheetId=SPREADSHEET_ID,
                             range=SPREADSHEET_RANGE).execute()
-#values = result.get('values', [])
+values = result.get('values', []) # List of List
 
-print(result)
+print(values) 
