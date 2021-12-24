@@ -5,33 +5,42 @@ from google.oauth2 import service_account
 import os
 from decouple import config
 
-# Set environment variables
-os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = 'keys.json'
+def sheets():
+    # Set environment variables
+    os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = 'keys.json'
 
 
-SERVICE_ACCOUNT_FILE = 'keys.json'
-SCOPES = ['https://www.googleapis.com/auth/spreadsheets']
+    SERVICE_ACCOUNT_FILE = 'keys.json'
+    SCOPES = ['https://www.googleapis.com/auth/spreadsheets']
 
 
-CREDS = None
-credentials = service_account.Credentials.from_service_account_file(
-    SERVICE_ACCOUNT_FILE, scopes=SCOPES)
+    CREDS = None
+    credentials = service_account.Credentials.from_service_account_file(
+        SERVICE_ACCOUNT_FILE, scopes=SCOPES)
 
 
-# The ID and range of a sample spreadsheet.
-SPREADSHEET_ID = config('SPREADSHEET_ID')
-SPREADSHEET_RANGE = 'feed!C2:C113'
-service = build('sheets', 'v4', credentials=CREDS)
+    # The ID and range of a sample spreadsheet.
+    SPREADSHEET_ID = config('SPREADSHEET_ID')
+    SPREADSHEET_RANGE = 'feed!C2:C113'
+    service = build('sheets', 'v4', credentials=CREDS)
 
-# Call the Sheets API
-sheet = service.spreadsheets()
-result = sheet.values().get(spreadsheetId=SPREADSHEET_ID,
-                            range=SPREADSHEET_RANGE).execute()
-values = result.get('values', [])  # List of List
+    # Call the Sheets API
+    sheet = service.spreadsheets()
+    result = sheet.values().get(spreadsheetId=SPREADSHEET_ID,
+                                range=SPREADSHEET_RANGE).execute()
+    values = result.get('values', [])  # List of List
+    return values
 
+def singleList(list):
+    #  Make a List out of List of Lists
+    RSS = []
+    for sublist in list:
+        for item in sublist:
+            RSS.append(item)
+    return RSS
 
-#  Make a List out of List of Lists
-RSS = []
-for sublist in values:
-    for item in sublist:
-        RSS.append(item)
+if __name__ == "__sheets__":
+    values=sheets()
+    singleList(values)
+    print (singleList)
+    

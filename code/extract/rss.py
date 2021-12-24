@@ -1,6 +1,11 @@
-from sheets import *
+import sheets
 from db import *
 import feedparser
+
+list=sheets.sheets()
+RSS=sheets.singleList(list)
+
+
 counter = 0
 for x in RSS:
     NewsFeed = feedparser.parse(x)
