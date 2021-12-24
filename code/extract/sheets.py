@@ -3,11 +3,10 @@
 from googleapiclient.discovery import build
 from google.oauth2 import service_account
 import os
-
+from decouple import config
 
 # Set environment variables
 os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = 'keys.json'
-
 
 
 SERVICE_ACCOUNT_FILE = 'keys.json'
@@ -20,7 +19,7 @@ credentials = service_account.Credentials.from_service_account_file(
 
 
 # The ID and range of a sample spreadsheet.
-SPREADSHEET_ID = ''
+SPREADSHEET_ID = config('SPREADSHEET_ID')
 SPREADSHEET_RANGE = 'feed!C2:C113'
 service = build('sheets', 'v4', credentials=CREDS)
 
