@@ -2,7 +2,6 @@ from sheets import *
 from db import *
 import feedparser
 counter = 0
-print(RSS[1])
 for x in RSS:
     NewsFeed = feedparser.parse(x)
     for i in range(len(NewsFeed.entries)):
