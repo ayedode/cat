@@ -1,8 +1,13 @@
 # This code fetches data from RSS Store on Google Sheet
-# export GOOGLE_APPLICATION_CREDENTIALS="keys.json"
 
 from googleapiclient.discovery import build
 from google.oauth2 import service_account
+import os
+
+
+# Set environment variables
+os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = 'keys.json'
+
 
 
 SERVICE_ACCOUNT_FILE = 'keys.json'
