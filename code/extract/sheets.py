@@ -5,19 +5,17 @@ from google.oauth2 import service_account
 import os
 from decouple import config
 
+
 def sheets():
     # Set environment variables
     os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = 'keys.json'
 
-
     SERVICE_ACCOUNT_FILE = 'keys.json'
     SCOPES = ['https://www.googleapis.com/auth/spreadsheets']
-
 
     CREDS = None
     credentials = service_account.Credentials.from_service_account_file(
         SERVICE_ACCOUNT_FILE, scopes=SCOPES)
-
 
     # The ID and range of a sample spreadsheet.
     SPREADSHEET_ID = config('SPREADSHEET_ID')
@@ -31,6 +29,7 @@ def sheets():
     values = result.get('values', [])  # List of List
     return values
 
+
 def singleList(list):
     #  Make a List out of List of Lists
     RSS = []
@@ -39,8 +38,12 @@ def singleList(list):
             RSS.append(item)
     return RSS
 
-if __name__ == "__sheets__":
-    values=sheets()
-    singleList(values)
-    print (singleList)
-    
+
+def main():
+    list = sheets()
+    RSS = singleList(list)
+    return RSS
+
+
+if __name__ == "__main__":
+    main()

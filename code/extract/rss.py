@@ -2,9 +2,8 @@ import sheets
 from db import *
 import feedparser
 
-list=sheets.sheets()
-RSS=sheets.singleList(list)
 
+RSS = sheets.main() # Get a List of RSS feed from Google Sheets
 
 counter = 0
 for x in RSS:
@@ -13,4 +12,3 @@ for x in RSS:
         print(counter, "  :  ", NewsFeed.entries[i].title, " : ", NewsFeed.entries[i].link,
               " : ", NewsFeed.entries[i].author, " : ", NewsFeed.entries[i].published, )
         counter += 1
-
