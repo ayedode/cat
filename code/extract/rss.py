@@ -3,7 +3,7 @@ from db import write
 import feedparser
 
 
-RSS = sheets.main() # Get a List of RSS feed from Google Sheets
+RSS = sheets.main()  # Get a List of RSS feed from Google Sheets
 
 for x in RSS:
     NewsFeed = feedparser.parse(x)
