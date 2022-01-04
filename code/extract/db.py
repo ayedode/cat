@@ -50,8 +50,8 @@ def connect():  # Connecting to the database using the psycopg2 module
 def create():  # Creating a table using the psycopg2 module
     conn = connect()
     cur = conn.cursor()
-    cur.execute("CREATE TABLE feed (TITLES VARCHAR(255) , URL TEXT, AUTHOR VARCHAR(255), DATE DATE);")
+    cur.execute("CREATE TABLE feed (ID SERIAL PRIMARY KEY, TITLES VARCHAR(255) , URL TEXT, AUTHOR VARCHAR(255), DATE DATE);")
     conn.commit()
     conn.close()
 
-# create()
+create()
