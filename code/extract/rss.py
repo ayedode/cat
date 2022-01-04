@@ -7,14 +7,19 @@ RSS = sheets.main()  # Get a List of RSS feed from Google Sheets
 conn = db.connect()
 cur = conn.cursor()
 
-def checkExsistence(Title):
-    cur.execute("SELECT * FROM feed WHERE TITLES=%s;", (Title,))
-    rows = cur.fetchall()
-    if len(rows) == 0:
-        return False
-    else:
-        return True
+bag = []
 
+def checkExsistence(Title):
+    if not Title in bag:
+        cur.execute("SELECT * FROM feed WHERE TITLES=%s;", (Title,))
+        rows = cur.fetchall()
+        if len(rows) == 0:
+            return False
+        else:
+            return True
+    else:
+        print(Title,"found in Bag")
+        return True
 
 for x in RSS:
     NewsFeed = feedparser.parse(x)
@@ -47,6 +52,9 @@ for x in RSS:
         else:
             cur.execute(
                 'INSERT INTO feed (Titles, URL, Author) VALUES (%s, %s, %s);', (Title, Link, Author))
+
+            print("Adding", Title,"to Bag")
+            bag.append(Title)
 
         # cur.execute(
         # "INSERT INTO feed (date) VALUES (%s);", (Published))
