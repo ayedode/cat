@@ -1,6 +1,7 @@
 import sheets
 import db
 import feedparser
+import datetime
 
 
 RSS = sheets.main()  # Get a List of RSS feed from Google Sheets
@@ -31,11 +32,11 @@ for x in RSS:
             Author = "None"
 
         try:
-            Temp = str(NewsFeed.entries[posts].published_parsed.tm_year)+"-"+str(
-                NewsFeed.entries[posts].published_parsed.tm_mon)+"-"+str(NewsFeed.entries[posts].published_parsed.tm_mday)
-            Published = Temp
+            Year = NewsFeed.entries[posts].published_parsed.tm_year
+            Month=NewsFeed.entries[posts].published_parsed.tm_mon
+            Date=NewsFeed.entries[posts].published_parsed.tm_mday
         except:
-            Published = str("01-01-1999")
+            pass
 
         try:
             Link = NewsFeed.entries[posts].link
@@ -50,9 +51,7 @@ for x in RSS:
         if checkExsistence(Title):
             pass
         else:
-            cur.execute(
-                'INSERT INTO feed (Titles, URL, Author) VALUES (%s, %s, %s);', (Title, Link, Author))
-
+            cur.execute('INSERT INTO feed (Titles, URL, Author, DATE) VALUES (%s, %s, %s, %s);', (Title, Link, Author, datetime.date(Year, Month, Date)))
             print("Adding", Title,"to Bag")
             bag.append(Title)
 
