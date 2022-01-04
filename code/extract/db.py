@@ -15,8 +15,6 @@ def connect():  # Connecting to the database using the psycopg2 module
         return conn
     except:
         print("Database connection failed")
-   
-
 
 
 # def read_all(conn):  # Reading data from the table using the psycopg2 module
@@ -50,7 +48,8 @@ def connect():  # Connecting to the database using the psycopg2 module
 def create():  # Creating a table using the psycopg2 module
     conn = connect()
     cur = conn.cursor()
-    cur.execute("CREATE TABLE feed (ID SERIAL PRIMARY KEY, TITLES VARCHAR(255) , URL TEXT, AUTHOR VARCHAR(255), DATE DATE);")
+    cur.execute(
+        "CREATE TABLE feed (ID SERIAL PRIMARY KEY, TITLES VARCHAR(255) , URL TEXT, AUTHOR VARCHAR(255), DATE DATE);")
     conn.commit()
     conn.close()
 

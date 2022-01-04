@@ -11,6 +11,7 @@ cur = conn.cursor()
 
 bag = []
 
+
 def checkExsistence(Title):
     if not Title in bag:
         cur.execute("SELECT * FROM feed WHERE TITLES=%s;", (Title,))
@@ -24,6 +25,7 @@ def checkExsistence(Title):
         logger.debug("FOUND IN BAG  "+Title)
         return True
 
+
 for x in RSS:
     NewsFeed = feedparser.parse(x)
     for posts in range(len(NewsFeed.entries)):
@@ -35,8 +37,8 @@ for x in RSS:
 
         try:
             Year = NewsFeed.entries[posts].published_parsed.tm_year
-            Month=NewsFeed.entries[posts].published_parsed.tm_mon
-            Date=NewsFeed.entries[posts].published_parsed.tm_mday
+            Month = NewsFeed.entries[posts].published_parsed.tm_mon
+            Date = NewsFeed.entries[posts].published_parsed.tm_mday
         except:
             pass
 
@@ -53,12 +55,10 @@ for x in RSS:
         if checkExsistence(Title):
             pass
         else:
-            cur.execute('INSERT INTO feed (Titles, URL, Author, DATE) VALUES (%s, %s, %s, %s);', (Title, Link, Author, datetime.date(Year, Month, Date)))
-            logger.debug("ADDING  "+ Title)
+            cur.execute('INSERT INTO feed (Titles, URL, Author, DATE) VALUES (%s, %s, %s, %s);',
+                        (Title, Link, Author, datetime.date(Year, Month, Date)))
+            logger.debug("ADDING  " + Title)
             bag.append(Title)
-
-        # cur.execute(
-        # "INSERT INTO feed (date) VALUES (%s);", (Published))
 
 conn.commit()
 conn.close()
