@@ -1,1 +1,1 @@
-# CAT – A Content Aggregation Tool
+# CAT – A Content Aggregation ToolKit
