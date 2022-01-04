@@ -54,4 +54,4 @@ def create():  # Creating a table using the psycopg2 module
     conn.commit()
     conn.close()
 
-create()
+# create()

@@ -2,6 +2,7 @@ import sheets
 import db
 import feedparser
 import datetime
+from loguru import logger
 
 
 RSS = sheets.main()  # Get a List of RSS feed from Google Sheets
@@ -17,9 +18,10 @@ def checkExsistence(Title):
         if len(rows) == 0:
             return False
         else:
+            logger.debug(" FOUND IN DB  "+Title)
             return True
     else:
-        print(Title,"found in Bag")
+        logger.debug("FOUND IN BAG  "+Title)
         return True
 
 for x in RSS:
@@ -52,7 +54,7 @@ for x in RSS:
             pass
         else:
             cur.execute('INSERT INTO feed (Titles, URL, Author, DATE) VALUES (%s, %s, %s, %s);', (Title, Link, Author, datetime.date(Year, Month, Date)))
-            print("Adding", Title,"to Bag")
+            logger.debug("ADDING  "+ Title)
             bag.append(Title)
 
         # cur.execute(
