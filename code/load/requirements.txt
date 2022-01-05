@@ -2,10 +2,15 @@ aiohttp==3.8.1
 aiosignal==1.2.0
 async-timeout==4.0.2
 attrs==21.4.0
+autopep8==1.6.0
 charset-normalizer==2.0.10
 frozenlist==1.2.0
 idna==3.3
+loguru==0.5.3
 multidict==5.2.0
+psycopg2==2.9.3
+pycodestyle==2.8.0
 python-decouple==3.5
 slackclient==2.9.3
+toml==0.10.2
 yarl==1.7.2
