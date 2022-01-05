@@ -49,8 +49,7 @@ for x in RSS:
 
         try:
             Link = NewsFeed.entries[posts].link
-            RemoveTrackingInLink=Link.split("?",1)[0]
-
+            RemoveTrackingInLink = Link.split("?", 1)[0]
         except:
             pass
 

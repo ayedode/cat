@@ -1,5 +1,7 @@
 code/extract/keys.json
-venv
+code/extract/venv
+code/load/venv
 code/extract/__pycache__
 .env
 code/extract/tempCodeRunnerFile.py
+code/load/__pycache__/slack.cpython-38.pyc
