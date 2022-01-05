@@ -50,6 +50,8 @@ def create():  # Creating a table using the psycopg2 module
     cur = conn.cursor()
     cur.execute(
         "CREATE TABLE feed (ID SERIAL PRIMARY KEY, TITLES VARCHAR(255) , URL TEXT, AUTHOR VARCHAR(255), CATEGORY VARCHAR(255), DATE DATE);")
+    cur.execute(
+        "CREATE TABLE status (SLACK INTEGER);")
     conn.commit()
     conn.close()
 
