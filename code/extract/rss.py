@@ -36,6 +36,11 @@ for x in RSS:
             Author = "None"
 
         try:
+            Category = NewsFeed.entries[posts].category
+        except:
+            pass
+
+        try:
             Year = NewsFeed.entries[posts].published_parsed.tm_year
             Month = NewsFeed.entries[posts].published_parsed.tm_mon
             Date = NewsFeed.entries[posts].published_parsed.tm_mday
@@ -55,8 +60,8 @@ for x in RSS:
         if checkExsistence(Title):
             pass
         else:
-            cur.execute('INSERT INTO feed (Titles, URL, Author, DATE) VALUES (%s, %s, %s, %s);',
-                        (Title, Link, Author, datetime.date(Year, Month, Date)))
+            cur.execute('INSERT INTO feed (Titles, URL, Author, CATEGORY, DATE) VALUES (%s, %s, %s, %s, %s);',
+                        (Title, Link, Author, Category, datetime.date(Year, Month, Date)))
             logger.debug("ADDING  " + Title)
             bag.append(Title)
 
