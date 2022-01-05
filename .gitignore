@@ -4,4 +4,6 @@ code/load/venv
 code/extract/__pycache__
 .env
 code/extract/tempCodeRunnerFile.py
+code/server/__pycache__
 code/load/__pycache__/slack.cpython-38.pyc
+code/server/__pycache__/main.cpython-38.pyc
