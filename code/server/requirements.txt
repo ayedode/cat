@@ -17,6 +17,7 @@ importlib-metadata==4.10.0
 importlib-resources==5.4.0
 itsdangerous==2.0.1
 Jinja2==3.0.3
+loguru==0.5.3
 Mako==1.1.6
 MarkupSafe==2.0.1
 orjson==3.6.5
@@ -24,6 +25,7 @@ psycopg2==2.9.3
 psycopg2-binary==2.9.3
 pycodestyle==2.8.0
 pydantic==1.9.0
+python-decouple==3.5
 python-dotenv==0.19.2
 python-multipart==0.0.5
 PyYAML==5.4.1
