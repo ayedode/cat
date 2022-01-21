@@ -46,13 +46,14 @@ class Post(BaseModel):
 
 
 def Titles():
-    cursor.execute("SELECT titles FROM feed ORDER BY ID DESC;")
+    cursor.execute("SELECT * FROM feed ORDER BY date DESC LIMIT 100;")
     titles = cursor.fetchall()
-    all=[]
-    for list in titles:
-        for sublist in list:
-            all.append(sublist)
-    return all
+    # all=[]
+    # for list in titles:
+    #     for sublist in list:
+    #         all.append(sublist)
+    # logger.debug(all)
+    return titles
 
 @app.get('/', response_class=HTMLResponse)
 def index(request: Request):

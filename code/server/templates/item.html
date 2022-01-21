@@ -3,15 +3,34 @@
 
 <head>
     <title>{{title}}</title>
-    <link href="{{ url_for('static', path='/style.css') }}" rel="stylesheet">
+    <link href="{{url_for('static', path='/style.css')}}" rel="stylesheet">
 
 </head>
 
 <body>
+    <section class="section-cities" id="cities">
+        <div class="row">
+            <H2>Blog Post</H2>
+        </div>
+        <div class="row ">
+            {% for x in body_content %}
+            <div class="col span-1-of-4 box">
+                <img src="" alt="Post Image">
+                <h3><a href="{{ x.2 }}">{{ x.1 }}</a></h3>
+                <div class="city-feature">
+                    Author: {{ x.3 }}
+                </div>
+                <div class="city-feature">
+                    Category: {{ x.4 }}
+                </div>
+                <div class="city-feature">
+                    Date: {{ x.5 }}
+                </div>
+            </div>
 
-    {% for x in body_content %}
-    <h1>{{x}}</h1>
-    {% endfor %}
+            {% endfor %}
+        </div>
+    </section>
 </body>
 
 </html>
