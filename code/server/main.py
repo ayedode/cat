@@ -46,7 +46,7 @@ class Post(BaseModel):
 
 
 def Titles():
-    cursor.execute("SELECT titles FROM feed")
+    cursor.execute("SELECT titles FROM feed ORDER BY ID DESC;")
     titles = cursor.fetchall()
     all=[]
     for list in titles:
