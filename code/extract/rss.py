@@ -2,6 +2,7 @@ import sheets
 import db
 import feedparser
 import datetime
+from meta_image import get_image
 from loguru import logger
 
 
@@ -38,7 +39,7 @@ for x in RSS:
         try:
             Category = NewsFeed.entries[posts].category
         except:
-            pass
+            Category = "Not Specified"
 
         try:
             Year = NewsFeed.entries[posts].published_parsed.tm_year
@@ -54,19 +55,24 @@ for x in RSS:
             pass
 
         try:
-            Title = str(NewsFeed.entries[posts].title)
+           Title = str(NewsFeed.entries[posts].title)
         except:
             Title = "Not Available"
+
+        try:
+            ImageURL = get_image(Link)
+        except:
+            ImageURL = "https://raw.githubusercontent.com/ayedode/cat/main/assests/no_image.png"
 
         if checkExsistence(Title):
             pass
         else:
-            cur.execute('INSERT INTO feed (Titles, URL, Author, CATEGORY, DATE) VALUES (%s, %s, %s, %s, %s);',
-                        (Title, RemoveTrackingInLink, Author, Category, datetime.date(Year, Month, Date)))
+            cur.execute('INSERT INTO feed (Titles, URL, Author, CATEGORY, DATE, IMAGEURL) VALUES (%s, %s, %s, %s, %s, %s);',
+                        (Title, RemoveTrackingInLink, Author, Category, datetime.date(Year, Month, Date), ImageURL))
             logger.debug("ADDING  " + Title)
             bag.append(Title)
+        conn.commit()
 
-conn.commit()
 conn.close()
 
 # c=1

@@ -43,6 +43,7 @@ class Post(BaseModel):
     Author: str
     category: Optional[str]
     date: Optional[str]
+    imageURL: str
 
 
 def Titles():

@@ -15,7 +15,8 @@
         <div class="row ">
             {% for x in body_content %}
             <div class="col span-1-of-4 box">
-                <img src="" alt="Post Image">
+                <img src="{{ x.6 }}" alt="Post Image" width="200" 
+                height="200">
                 <h3><a href="{{ x.2 }}">{{ x.1 }}</a></h3>
                 <div class="city-feature">
                     Author: {{ x.3 }}
@@ -31,6 +32,6 @@
             {% endfor %}
         </div>
     </section>
-</body>
+</body> 
 
 </html>
