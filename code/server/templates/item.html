@@ -3,8 +3,10 @@
 
 <head>
     <title>{{title}}</title>
-    <link href="{{url_for('static', path='/style.css')}}" rel="stylesheet">
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- <link href="{{url_for('static', path='/style.css')}}" rel="stylesheet"> -->
 </head>
 
 <body>
@@ -12,10 +14,10 @@
         <div class="row">
             <H2>Blog Post</H2>
         </div>
-        <div class="row ">
+        <div class="grid grid-cols-3 gap-4">
             {% for x in body_content %}
-            <div class="col span-1-of-4 box">
-                <img src="{{ x.6 }}" alt="Post Image" width="200" 
+            <div class="col span-1-of-4 box p-4  bg-sky-200 aspect-square shadow-2xl bg-white rounded-lg">
+                <img src="{{x.6}}" alt="Post Image" width="200" 
                 height="200">
                 <h3><a href="{{ x.2 }}">{{ x.1 }}</a></h3>
                 <div class="city-feature">

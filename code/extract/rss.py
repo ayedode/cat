@@ -70,9 +70,8 @@ for x in RSS:
             cur.execute('INSERT INTO feed (Titles, URL, Author, CATEGORY, DATE, IMAGEURL) VALUES (%s, %s, %s, %s, %s, %s);',
                         (Title, RemoveTrackingInLink, Author, Category, datetime.date(Year, Month, Date), ImageURL))
             logger.debug("ADDING  " + Title)
-            bag.append(Title)
-        conn.commit()
-
+            bag.append(Title)       
+conn.commit()
 conn.close()
 
 # c=1
