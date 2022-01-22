@@ -64,6 +64,14 @@ for x in RSS:
         except:
             ImageURL = "https://raw.githubusercontent.com/ayedode/cat/main/assests/no_image.png"
 
+        # try:
+        #     DescriptionRaw = NewsFeed.entries[posts].summary
+        #     Description = DescriptionRaw[:120]
+        #     print(DescriptionRaw)
+        # except:
+        #     Description = " "    
+
+
         if checkExsistence(Title):
             pass
         else:
