@@ -14,3 +14,15 @@ def get_image(url):
     else:
         return ("https://raw.githubusercontent.com/ayedode/cat/main/assests/no_image.png")
 
+
+def get_description(url):
+
+    response = urllib.request.urlopen(url)
+    ParsedPage = BeautifulSoup(response, 
+                         'html.parser', 
+                         from_encoding=response.info().get_param('charset'))
+
+    if ParsedPage.findAll("meta", property="og:description"):
+        return ParsedPage.find("meta", property="og:description")["content"]
+    else:
+        return
