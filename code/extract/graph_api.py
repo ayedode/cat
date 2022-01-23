@@ -6,11 +6,6 @@ from decouple import config
 access_token = config('GRAPH_API_TOKEN')
 api_endpoint = config('GRAPH_API_ENDPOINT')
 
-url = "https://devops.com/2022-will-be-the-year-of-the-cyber-shift-show/"
-
-
-request = api_endpoint+url+"?access_token="+access_token
-
 
 # r = requests.post(request)
 # call = r.content
@@ -20,25 +15,23 @@ request = api_endpoint+url+"?access_token="+access_token
 # description = json_data['description']
 
 
-def get_image(url):
+def get_image_from_graph(url):
 
     request = api_endpoint+url+"?access_token="+access_token
     r = requests.post(request)
     call = r.content
     json_data = json.loads(call)
-    image = json_data['image'][0]['url']
-    return image
+    Image = json_data['image'][0]['url']
+    return Image
 
 
-
-def get_description(url):
+def get_description_from_graph(url):
 
     request = api_endpoint+url+"?access_token="+access_token
     r = requests.post(request)
     call = r.content
     json_data = json.loads(call)
-    description = json_data['description']
-    return description
+    Description = json_data['description']
+    return Description
 
 
-print(get_description(url))

@@ -2,7 +2,8 @@ import sheets
 import db
 import feedparser
 import datetime
-from meta_image import get_image
+from meta_image import get_image, get_description
+from graph_api import get_image_from_graph, get_description_from_graph
 from loguru import logger
 
 
@@ -55,7 +56,7 @@ for x in RSS:
             pass
 
         try:
-           Title = str(NewsFeed.entries[posts].title)
+            Title = str(NewsFeed.entries[posts].title)
         except:
             Title = "Not Available"
 
@@ -69,8 +70,7 @@ for x in RSS:
         #     Description = DescriptionRaw[:120]
         #     print(DescriptionRaw)
         # except:
-        #     Description = " "    
-
+        #     Description = " "
 
         if checkExsistence(Title):
             pass
@@ -78,7 +78,7 @@ for x in RSS:
             cur.execute('INSERT INTO feed (Titles, URL, Author, CATEGORY, DATE, IMAGEURL) VALUES (%s, %s, %s, %s, %s, %s);',
                         (Title, RemoveTrackingInLink, Author, Category, datetime.date(Year, Month, Date), ImageURL))
             logger.debug("ADDING  " + Title)
-            bag.append(Title)       
+            bag.append(Title)
 conn.commit()
 conn.close()
 
@@ -87,3 +87,29 @@ conn.close()
 # for posts in range(len(NewsFeed.entries)):
 #     print(c, "      ", NewsFeed.entries[posts].title)
 #     c=c+1
+
+
+# for x in RSS:
+#     NewsFeed = feedparser.parse(x)
+#     for posts in range(len(NewsFeed.entries)):
+
+#         try:
+#             Title = str(NewsFeed.entries[posts].title)
+#         except:
+#             Title = "not available"
+
+#         try:
+#             Link = NewsFeed.entries[posts].link
+#             RemoveTrackingInLink = Link.split("?", 1)[0]
+#         except:
+#             Link = "not available"
+
+#         try:
+#             try:
+#                 Image=get_image(Link)
+#             except:
+#                 Image=get_image_from_graph(Link)
+#         except:
+#             Image="https://raw.githubusercontent.com/ayedode/cat/main/assests/no_image.png"
+
+#         logger.debug("Image: "+Image )
