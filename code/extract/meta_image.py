@@ -22,4 +22,3 @@ def get_description(url):
                                from_encoding=response.info().get_param('charset'))
     Description = ParsedPage.find("meta", property="og:description")["content"]
     return Description
-

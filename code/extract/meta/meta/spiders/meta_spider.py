@@ -28,12 +28,9 @@ class MetaSpiderSpider(scrapy.Spider):
     name = 'meta_spider'
 
     start_urls = read_all()
-    # start_urls = ['https://devops.com/augmented-reality/', 'https://devops.com/', 'https://www.redhat.com/sysadmin/why-tech-certification', 'https://devops.com/how-dora-metrics-can-measure-and-improve-performance/']
-
-    # print(start_urls)
 
     def parse(self, response):
-        # print(response.css('title::text')[0].get())
+
         try:
             image_url = response.css(
                 'meta[property="og:image"]::attr(content)')[0].get()
@@ -47,13 +44,17 @@ class MetaSpiderSpider(scrapy.Spider):
         except:
             logger.warning("NO DESCRIPTION", response.url)
             description = "Not Available"
+
         title = response.css(
             'meta[property="og:title"]::attr(content)')[0].get()
+
         logger.debug(response.url)
         logger.debug(image_url)
         logger.debug(description)
+
         cur.execute('UPDATE feed SET Description = %s, IMAGEURL = %s WHERE URL = %s;',
                     (description, image_url, response.url))
+
         logger.success("Updating  ", title)
         conn.commit()
 
@@ -61,6 +62,3 @@ class MetaSpiderSpider(scrapy.Spider):
 process = CrawlerProcess(settings=None)
 process.crawl(MetaSpiderSpider)
 process.start()
-
-
-# UPDATE FEED SET DESCRIPTION='Tesefeft' where ID=3;

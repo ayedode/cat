@@ -33,8 +33,3 @@ def get_description_from_graph(url):
     json_data = json.loads(call)
     Description = json_data['description']
     return Description
-
-
-
-
-print(get_image_from_graph('https://devops.com/augmented-reality/'))

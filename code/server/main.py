@@ -56,6 +56,7 @@ def Titles():
     # logger.debug(all)
     return titles
 
+
 @app.get('/', response_class=HTMLResponse)
 def index(request: Request):
     return templates.TemplateResponse("item.html", {"request": request, "title": "All Post", "body_content": Titles()})
@@ -66,7 +67,6 @@ def root():
     cursor.execute("SELECT * FROM feed")
     records = cursor.fetchall()
     return{"POSTS": records}
-
 
 
 # @app.post("/itemgs")
@@ -83,4 +83,3 @@ def root():
 
 # conn.commit()
 # conn.close()
-
