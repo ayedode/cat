@@ -2,8 +2,8 @@ import sheets
 import db
 import feedparser
 import datetime
-from meta_image import get_image, get_description
-from graph_api import get_image_from_graph, get_description_from_graph
+# from meta_image import get_image, get_description
+# from graph_api import get_image_from_graph, get_description_from_graph
 from loguru import logger
 
 
@@ -21,10 +21,10 @@ def checkExsistence(Title):
         if len(rows) == 0:
             return False
         else:
-            logger.debug(" FOUND IN DB  "+Title)
+            logger.warning(" FOUND IN DB  "+Title)
             return True
     else:
-        logger.debug("FOUND IN BAG  "+Title)
+        logger.warning("FOUND IN BAG  "+Title)
         return True
 
 
@@ -60,10 +60,10 @@ for x in RSS:
         except:
             Title = "Not Available"
 
-        try:
-            ImageURL = get_image(Link)
-        except:
-            ImageURL = "https://raw.githubusercontent.com/ayedode/cat/main/assests/no_image.png"
+        # try:
+        #     ImageURL = get_image(Link)
+        # except:
+        #     ImageURL = "https://raw.githubusercontent.com/ayedode/cat/main/assests/no_image.png"
 
         # try:
         #     DescriptionRaw = NewsFeed.entries[posts].summary
@@ -75,11 +75,13 @@ for x in RSS:
         if checkExsistence(Title):
             pass
         else:
-            cur.execute('INSERT INTO feed (Titles, URL, Author, CATEGORY, DATE, IMAGEURL) VALUES (%s, %s, %s, %s, %s, %s);',
-                        (Title, RemoveTrackingInLink, Author, Category, datetime.date(Year, Month, Date), ImageURL))
-            logger.debug("ADDING  " + Title)
+            cur.execute('INSERT INTO feed (Titles, URL, Author, CATEGORY, DATE) VALUES (%s, %s, %s, %s, %s);',
+                        (Title, RemoveTrackingInLink, Author, Category, datetime.date(Year, Month, Date)))
+            logger.success("ADDING  " + Title)
             bag.append(Title)
-conn.commit()
+            conn.commit()
+
+# conn.commit()
 conn.close()
 
 # c=1

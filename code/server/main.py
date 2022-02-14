@@ -47,7 +47,7 @@ class Post(BaseModel):
 
 
 def Titles():
-    cursor.execute("SELECT * FROM feed ORDER BY date DESC LIMIT 100;")
+    cursor.execute("SELECT * FROM feed ORDER BY date DESC LIMIT 10000;")
     titles = cursor.fetchall()
     # all=[]
     # for list in titles:

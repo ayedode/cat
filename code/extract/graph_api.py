@@ -35,3 +35,6 @@ def get_description_from_graph(url):
     return Description
 
 
+
+
+print(get_image_from_graph('https://devops.com/augmented-reality/'))
