@@ -1,14 +1,11 @@
-code/extract/keys.json
-code/extract/venv
-code/load/venv
-code/extract/__pycache__
+#Ignores specific folder and files in the same directory
+/env
 .env
-code/extract/tempCodeRunnerFile.py
-code/server/__pycache__
-code/load/__pycache__/slack.cpython-38.pyc
-code/server/__pycache__/main.cpython-38.pyc
-code/extract/meta/meta/spiders/__pycache__/meta_spider.cpython-38.pyc
-.gitignore
-code/extract/meta/meta/spiders/items.json
-code/extract/meta/meta/spiders/__pycache__/meta_spider.cpython-38.pyc
-code/extract/meta/meta/spiders/__pycache__/trial.cpython-38.pyc
+
+# Ignores Folders across all directories
+**/__pycache__
+**/venv
+
+#Ignores Files across all directories
+*.json
+
