@@ -11,6 +11,6 @@ jobs:
       uses: TheLastProject/keep-remote-file-locally-up-to-date-action@v1
       with:
         url: https://data.stackexchange.com/stackoverflow/csv/1620197
-        file_in_repo: /home/ayedo/cat/code/extract/relation/
+        file_in_repo: cat/code/extract/relation/1620197
 on: workflow_dispatch
 
