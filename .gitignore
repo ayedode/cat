@@ -8,4 +8,5 @@
 
 #Ignores Files across all directories
 *.json
+*.log
 

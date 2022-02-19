@@ -40,7 +40,7 @@ class MetaSpiderSpider(scrapy.Spider):
 
         try:
             description = response.css(
-                'meta[property="og:description"]::attr(content)')[0].get()
+                'meta[property="og:description"]::attr(content)')[0].get()[:230]
         except:
             logger.warning("NO DESCRIPTION", response.url)
             description = "Not Available"

@@ -52,6 +52,8 @@ def create():  # Creating a table using the psycopg2 module
         "CREATE TABLE feed (ID SERIAL PRIMARY KEY, TITLES VARCHAR(255) , URL TEXT, AUTHOR VARCHAR(255), CATEGORY VARCHAR(255), DATE DATE, IMAGEURL TEXT, DESCRIPTION VARCHAR(255));")
     cur.execute(
         "CREATE TABLE status (SLACK INTEGER);")
+    cur.execute(
+        "CREATE TABLE tags (ID SERIAL PRIMARY KEY, tag VARCHAR(255), description TEXT);")    
     conn.commit()
     conn.close()
 
