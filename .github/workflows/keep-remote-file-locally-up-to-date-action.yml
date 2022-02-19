@@ -12,6 +12,5 @@ jobs:
       with:
         url: https://data.stackexchange.com/stackoverflow/csv/1620197
         file_in_repo: /home/ayedo/cat/code/extract/relation/
-on:
-  schedule:
-    - cron: '* * * * *' 
+on: workflow_dispatch
+

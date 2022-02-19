@@ -33,15 +33,12 @@ for itr in df.iterrows():
     description = str(itr[1].Description)
     logger.debug(tagname)
     logger.debug(description)
-    # cur.execute("INSERT INTO tags (tag, description) VALUES (%s, %s);",
-    #             (tagname, description))
+    cur.execute("INSERT INTO tags (tag, description) VALUES (%s, %s);",
+                (tagname, description))
     logger.success("Logging Entry" + tagname)
 
 
-# itr = next(
-#     df.iterrows())
-# print(itr[1].TagName)
-# print(itr[1].Description)
-# conn.commit()
+
+conn.commit()
 logger.success("Committed")
 conn.close()
