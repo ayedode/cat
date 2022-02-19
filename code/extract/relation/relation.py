@@ -8,7 +8,7 @@ DB_NAME = config('DB_NAME')
 DB_USER = config('DB_USER')
 DB_HOST = config('DB_HOST')
 DB_PASSWORD = config('DB_PASSWORD')
-filename = '1620197.csv'
+filename = '1620197'
 
 
 def connect():
@@ -33,8 +33,8 @@ for itr in df.iterrows():
     description = str(itr[1].Description)
     logger.debug(tagname)
     logger.debug(description)
-    cur.execute("INSERT INTO tags (tag, description) VALUES (%s, %s);",
-                (tagname, description))
+    # cur.execute("INSERT INTO tags (tag, description) VALUES (%s, %s);",
+    #             (tagname, description))
     logger.success("Logging Entry" + tagname)
 
 
@@ -42,6 +42,6 @@ for itr in df.iterrows():
 #     df.iterrows())
 # print(itr[1].TagName)
 # print(itr[1].Description)
-conn.commit()
+# conn.commit()
 logger.success("Committed")
 conn.close()
