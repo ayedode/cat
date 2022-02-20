@@ -52,6 +52,8 @@ for x in RSS:
         try:
             Link = NewsFeed.entries[posts].link
             RemoveTrackingInLink = Link.split("?", 1)[0]
+            RemoveHashInLink = RemoveTrackingInLink.split("#", 1)[0]
+
         except:
             pass
 
@@ -76,7 +78,7 @@ for x in RSS:
             pass
         else:
             cur.execute('INSERT INTO feed (Titles, URL, Author, CATEGORY, DATE) VALUES (%s, %s, %s, %s, %s);',
-                        (Title, RemoveTrackingInLink, Author, Category, datetime.date(Year, Month, Date)))
+                        (Title, RemoveHashInLink, Author, Category, datetime.date(Year, Month, Date)))
             logger.success("ADDING  " + Title)
             bag.append(Title)
             conn.commit()
