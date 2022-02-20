@@ -47,7 +47,7 @@ class Post(BaseModel):
 
 
 def Titles():
-    cursor.execute("SELECT * FROM feed ORDER BY date DESC LIMIT 10000;")
+    cursor.execute("SELECT * FROM feed ORDER BY date DESC LIMIT 1000;")
     titles = cursor.fetchall()
     # all=[]
     # for list in titles:
@@ -61,6 +61,10 @@ def Titles():
 def index(request: Request):
     return templates.TemplateResponse("item.html", {"request": request, "title": "All Post", "body_content": Titles()})
 
+
+@app.get('/tags', response_class=HTMLResponse)
+def index(request: Request):
+    return templates.TemplateResponse("tags.html", {"request": request, "title": "All Post", "body_content": Titles()})
 
 @app.get("/raw")
 def root():
