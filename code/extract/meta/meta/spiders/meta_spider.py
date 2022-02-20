@@ -52,8 +52,12 @@ class MetaSpiderSpider(scrapy.Spider):
         logger.debug(image_url)
         logger.debug(description)
 
+        remove_tracking = response.url.split("?", 1)[0]
+        remove_hash_tracking = remove_tracking.split("#", 1)[0]
+        url = remove_hash_tracking
+
         cur.execute('UPDATE feed SET Description = %s, IMAGEURL = %s WHERE URL = %s;',
-                    (description, image_url, response.url))
+                    (description, image_url, url))
 
         logger.success("Updating  ", title)
         conn.commit()
