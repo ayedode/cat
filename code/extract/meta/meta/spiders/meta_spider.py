@@ -51,10 +51,12 @@ class MetaSpiderSpider(scrapy.Spider):
         try:
             original_url = response.meta['redirect_urls'][0]
             logger.critical(original_url)
+            # (parsed response) abcd.com/abcd -> cdn.abcd.com/abcd (database url)
 
         except:
             original_url = response.url
             logger.debug(original_url)
+            # (parsed response) abcd.com/abcd -> abcd.com/abcd (no redirects)
 
         logger.info(response.url)
         logger.debug(original_url)
