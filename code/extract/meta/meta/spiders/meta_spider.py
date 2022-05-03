@@ -48,16 +48,21 @@ class MetaSpiderSpider(scrapy.Spider):
         title = response.css(
             'meta[property="og:title"]::attr(content)')[0].get()
 
-        logger.debug(response.url)
+        try:
+            original_url = response.meta['redirect_urls'][0]
+            logger.critical(original_url)
+
+        except:
+            original_url = response.url
+            logger.debug(original_url)
+
+        logger.info(response.url)
+        logger.debug(original_url)
         logger.debug(image_url)
         logger.debug(description)
 
-        remove_tracking = response.url.split("?", 1)[0]
-        remove_hash_tracking = remove_tracking.split("#", 1)[0]
-        url = remove_hash_tracking
-
         cur.execute('UPDATE feed SET Description = %s, IMAGEURL = %s WHERE URL = %s;',
-                    (description, image_url, url))
+                    (description, image_url, original_url))
 
         logger.success("Updating  ", title)
         conn.commit()

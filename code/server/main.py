@@ -58,7 +58,7 @@ def Titles():
 
 
 def Tags():
-    cursor.execute("SELECT * FROM TAGS LIMIT 500;")
+    cursor.execute("SELECT * FROM TAGS LIMIT 50;")
     titles = cursor.fetchall()
     # all=[]
     # for list in titles:
@@ -78,9 +78,9 @@ def index(request: Request):
 
 
 
-@app.get("/tags/{tags_id}")
-def read_item(item_id: string,):
-    return {"item_id": item_id}
+# @app.get("/tags/{tags_id}")
+# def read_item(item_id: string,):
+#     return {"item_id": item_id}
 
 
 
