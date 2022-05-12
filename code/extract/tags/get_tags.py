@@ -1,6 +1,4 @@
-import scrapy
 from loguru import logger
-from scrapy.crawler import CrawlerProcess
 import psycopg2
 from decouple import config
 
@@ -24,31 +22,26 @@ def tags():
     for row in rows:
         temps = row[1]
         my_set.add(temps)
-
         tags.append(str(row[1]))
     return(my_set)
 
 my_set=tags()
 seen = set()
 
+
+
 def read_all():
 
-    cur.execute("SELECT id,description FROM feed limit 1900;")
+    cur.execute("SELECT id,description FROM feed where description is not null ;")
     rows = cur.fetchall()
     
-    
     for i in range(len(rows)):
-        id = rows[i][0]
-
+        id = rows[i][0] # id of the feed
         description = rows[i][1].split(" ")
+
         for j in range(len(description)):
             if description[j] in my_set:
-                # logger.debug(description[j])
-                # logger.critical(id)
-      
-                seen.add((id,description[j]))
+                logger.critical((id,description[j]))
+        pass
 
-    logger.error(seen)         
-    pass
-
-print(read_all())
+read_all()
