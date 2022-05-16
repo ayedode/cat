@@ -11,6 +11,8 @@ conn = psycopg2.connect(
     dbname=DB_NAME, user=DB_USER, host=DB_HOST, password=DB_PASSWORD)
 cur = conn.cursor()
 
+tags_dict = {}
+
 
 def tags():
 
@@ -21,27 +23,34 @@ def tags():
 
     for row in rows:
         temps = row[1]
+        tags_dict[temps] = row[0]
         my_set.add(temps)
         tags.append(str(row[1]))
     return(my_set)
 
-my_set=tags()
-seen = set()
 
+my_set = tags()
+seen = set()
 
 
 def read_all():
 
-    cur.execute("SELECT id,description FROM feed where description is not null ;")
+    cur.execute(
+        "SELECT id,description FROM feed where description is not null ;")
     rows = cur.fetchall()
-    
+
     for i in range(len(rows)):
-        id = rows[i][0] # id of the feed
+        id = rows[i][0]  # id of the feed
         description = rows[i][1].split(" ")
 
         for j in range(len(description)):
             if description[j] in my_set:
-                logger.critical((id,description[j]))
+                logger.critical((id, tags_dict[description[j]]))
+                cur.execute('INSERT INTO connect (postid, tagsid) VALUES (%s, %s);',
+                            (id, tags_dict[description[j]]))
         pass
 
+
 read_all()
+conn.commit()
+conn.close()
