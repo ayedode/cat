@@ -45,12 +45,21 @@ def read_all():
 
         for j in range(len(description)):
             if description[j] in my_set:
-                logger.critical((id, tags_dict[description[j]]))
-                cur.execute('INSERT INTO connect (postid, tagsid) VALUES (%s, %s);',
-                            (id, tags_dict[description[j]]))
+                # logger.critical((id, tags_dict[description[j]]))
+                seen.add((id, tags_dict[description[j]]))
         pass
 
 
+def write_to_db():
+    for relation in seen:
+        cur.execute("INSERT INTO connect (postid, tagsid) VALUES (%s, %s)",
+                    (relation[0], relation[1]))
+        logger.debug(
+            {'postid': relation[0], 'tagsid': relation[1], 'status': 'success'})
+
+
 read_all()
+write_to_db()
+
 conn.commit()
 conn.close()

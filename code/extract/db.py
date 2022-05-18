@@ -55,7 +55,7 @@ def create():  # Creating a table using the psycopg2 module
     cur.execute(
         "CREATE TABLE tags (ID SERIAL PRIMARY KEY, tag VARCHAR(255), description TEXT);")  
     cur.execute(
-        "CREATE TABLE connect (postid int, tagsid int);")    
+        "CREATE TABLE connect (postid BIGINT, tagsid BIGINT);")    
     conn.commit()
     conn.close()
 
