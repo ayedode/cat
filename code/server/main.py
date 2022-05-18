@@ -34,24 +34,26 @@ cursor = conn.cursor()
 
 
 def Titles():
-    cursor.execute("SELECT * FROM feed ORDER BY date DESC LIMIT 10;")
+    cursor.execute(
+        "SELECT  id ,titles, url, author, category, date, imageurl, description FROM feed ORDER BY date DESC LIMIT 10;")
     titles = cursor.fetchall()
-    logger.debug(titles)
     return titles
 
 
 def Tags():
-    cursor.execute("SELECT * FROM TAGS LIMIT 50;")
+    cursor.execute("SELECT id,tag,description FROM TAGS LIMIT 50;")
     titles = cursor.fetchall()
     return titles
 
+
 def CheckTagExsistence(tag):
-    cursor.execute("SELECT * FROM TAGS WHERE tag='{0}';".format(tag))
+    cursor.execute("SELECT tag FROM TAGS WHERE tag='{0}';".format(tag))
     tag = cursor.fetchall()
     if tag:
         return True
     else:
         return False
+
 
 def TitlesTags(tag):
     logger.debug(tag + " Tag Requested")
@@ -84,5 +86,6 @@ def get_tags_element(tag_name, request: Request):
         return templates.TemplateResponse("item.html", {"request": request, "title": "All Post", "body_content": TitlesTags(tag_name)})
     else:
         logger.debug(tag_name + " Tag Not Found")
-        raise HTTPException(status_code=404, detail="%s Tag not Available" % tag_name)    
-        
+        raise HTTPException(status_code=404, detail="%s Tag not Available" % tag_name,
+                            headers={"X-Error": "Tag unavailable"},
+                            )
