@@ -14,6 +14,16 @@ cur = conn.cursor()
 tags_dict = {}
 
 
+def check_if_exists(id, tagid):
+    cur.execute(
+        "SELECT * FROM connect WHERE postid=%s AND tagsid=%s", (id, tagid))
+    rows = cur.fetchall()
+    if len(rows) == 0:
+        return False
+    else:
+        return True
+
+
 def tags():
 
     cur.execute("SELECT id,tag FROM tags;")
@@ -52,11 +62,16 @@ def read_all():
 
 def write_to_db():
     for relation in seen:
-        cur.execute("INSERT INTO connect (postid, tagsid) VALUES (%s, %s)",
-                    (relation[0], relation[1]))
-        logger.debug(
-            {'postid': relation[0], 'tagsid': relation[1], 'status': 'success'})
+        if check_if_exists(relation[0], relation[1]):
+            logger.debug(
+                {'postid': relation[0], 'tagsid': relation[1], 'status': 'failed'})
 
+        else:
+            cur.execute("INSERT INTO connect (postid, tagsid) VALUES (%s, %s)",
+                        (relation[0], relation[1]))
+            logger.debug(
+                {'postid': relation[0], 'tagsid': relation[1], 'status': 'success'})
+           
 
 read_all()
 write_to_db()
