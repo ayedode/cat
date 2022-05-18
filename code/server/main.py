@@ -1,4 +1,4 @@
-from fastapi import FastAPI, Request
+from fastapi import FastAPI, Request, HTTPException
 from fastapi.responses import HTMLResponse
 from decouple import config
 import psycopg2
@@ -45,6 +45,28 @@ def Tags():
     titles = cursor.fetchall()
     return titles
 
+def CheckTagExsistence(tag):
+    cursor.execute("SELECT * FROM TAGS WHERE tag='{0}';".format(tag))
+    tag = cursor.fetchall()
+    if tag:
+        return True
+    else:
+        return False
+
+def TitlesTags(tag):
+    logger.debug(tag + " Tag Requested")
+    cursor.execute(
+        "select feed.id,feed.titles, feed.url, feed.author, tags.tag, feed.date, feed.imageurl, feed.description from feed inner join connect on feed.id = connect.postid inner join tags on connect.tagsid = tags.id AND tags.tag='{0}';".format(tag))
+    titles = cursor.fetchall()
+    return titles
+
+
+@app.get("/raw")
+def root():
+    cursor.execute("SELECT * FROM feed")
+    records = cursor.fetchall()
+    return{"POSTS": records}
+
 
 @app.get('/', response_class=HTMLResponse)
 def index(request: Request):
@@ -56,21 +78,11 @@ def index(request: Request):
     return templates.TemplateResponse("tags.html", {"request": request, "title": "All Post", "body_content": Tags()})
 
 
-def TitlesTags(tag):
-    logger.debug(tag + " Tag Requested")
-    cursor.execute(
-        "select feed.id,feed.titles, feed.url, feed.author, tags.tag, feed.date, feed.imageurl, feed.description from feed inner join connect on feed.id = connect.postid inner join tags on connect.tagsid = tags.id AND tags.tag='{0}';".format(tag))
-    titles = cursor.fetchall()
-    return titles
-
-
 @app.get("/tags/{tag_name}")
 def get_tags_element(tag_name, request: Request):
-    return templates.TemplateResponse("item.html", {"request": request, "title": "All Post", "body_content": TitlesTags(tag_name)})
-
-
-@app.get("/raw")
-def root():
-    cursor.execute("SELECT * FROM feed")
-    records = cursor.fetchall()
-    return{"POSTS": records}
+    if CheckTagExsistence(tag_name):
+        return templates.TemplateResponse("item.html", {"request": request, "title": "All Post", "body_content": TitlesTags(tag_name)})
+    else:
+        logger.debug(tag_name + " Tag Not Found")
+        raise HTTPException(status_code=404, detail="%s Tag not Available" % tag_name)    
+        
