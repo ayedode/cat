@@ -1,7 +1,4 @@
-from typing import Optional
 from fastapi import FastAPI, Request
-from fastapi.params import Body
-from pydantic import BaseModel
 from fastapi.responses import HTMLResponse
 from decouple import config
 import psycopg2
@@ -35,15 +32,6 @@ def connect():
 conn = connect()
 cursor = conn.cursor()
 
-
-class Post(BaseModel):
-    ID: int
-    titles: str
-    URL: str
-    Author: str
-    category: Optional[str]
-    date: Optional[str]
-    imageURL: str
 
 
 def Titles():
