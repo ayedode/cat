@@ -78,6 +78,28 @@ def index(request: Request):
 
 
 
+
+def TitlesTags(tag):
+    logger.debug(tag)
+    cursor.execute("select feed.titles, tags.tag, feed.url from feed inner join connect on feed.id = connect.postid inner join tags on connect.tagsid = tags.id AND tags.tag='{0}';".format(tag))
+    # cursor.execute("select feed.titles, tags.tag, feed.url from feed inner join connect on feed.id = connect.postid inner join tags on connect.tagsid = tags.id AND tags.tag=%s;", (tag,))
+    
+    
+    titles = cursor.fetchall()
+    # all=[]
+    # for list in titles:
+    #     for sublist in list:
+    #         all.append(sublist)
+    # logger.debug(all)
+    return titles
+
+
+@app.get("/tags/{tag_name}")
+def get_tags_element(tag_name,request: Request):
+    return templates.TemplateResponse("item.html", {"request": request, "title": "All Post", "body_content": TitlesTags(tag_name)})
+    
+
+
 # @app.get("/tags/{tags_id}")
 # def read_item(item_id: string,):
 #     return {"item_id": item_id}
