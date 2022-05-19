@@ -35,19 +35,18 @@ cursor = conn.cursor()
 
 def Titles():
     cursor.execute(
-        "SELECT  id ,titles, url, author, category, date, imageurl, description FROM feed ORDER BY date DESC LIMIT 10;")   
+        "SELECT  titles, url, author, category, date, imageurl, description FROM feed ORDER BY date DESC LIMIT 10;")   
     titles = cursor.fetchall()
     posts = []
     for title in titles:
-        dict = {
-            'id': title[0],
-            'titles': title[1],
-            'url': title[2],
-            'author': title[3],
-            'category': title[4],
-            'date': title[5],
-            'imageurl': title[6],
-            'description': title[7]
+        dict = { 
+            "title": title[0],
+            "url": title[1],
+            "author": title[2],
+            "category": title[3],
+            "date": title[4],
+            "imageurl": title[5],
+            "description": title[6]
         }
         posts.append(dict)
     return posts
@@ -79,9 +78,21 @@ def CheckTagExsistence(tag):
 def TitlesTags(tag):
     logger.debug(tag + " Tag Requested")
     cursor.execute(
-        "select feed.id,feed.titles, feed.url, feed.author, tags.tag, feed.date, feed.imageurl, feed.description from feed inner join connect on feed.id = connect.postid inner join tags on connect.tagsid = tags.id AND tags.tag='{0}';".format(tag))
-    titles = cursor.fetchall()
-    return titles
+        "select feed.titles, feed.url, feed.author, tags.tag, feed.date, feed.imageurl, feed.description from feed inner join connect on feed.id = connect.postid inner join tags on connect.tagsid = tags.id AND tags.tag='{0}';".format(tag))
+    titlaes = cursor.fetchall()
+    posts = []
+    for title in titles:
+        dict = {
+            "title": title[0],
+            "url": title[1],
+            "author": title[2],
+            "tag": title[3],
+            "date": title[4],
+            "imageurl": title[5],
+            "description": title[6]
+        }
+        posts.append(dict)
+    return posts
 
 
 @app.get("/raw")
