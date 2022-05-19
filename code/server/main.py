@@ -35,9 +35,23 @@ cursor = conn.cursor()
 
 def Titles():
     cursor.execute(
-        "SELECT  id ,titles, url, author, category, date, imageurl, description FROM feed ORDER BY date DESC LIMIT 10;")
+        "SELECT  id ,titles, url, author, category, date, imageurl, description FROM feed ORDER BY date DESC LIMIT 10;")   
     titles = cursor.fetchall()
-    return titles
+    posts = []
+    for title in titles:
+        dict = {
+            'id': title[0],
+            'titles': title[1],
+            'url': title[2],
+            'author': title[3],
+            'category': title[4],
+            'date': title[5],
+            'imageurl': title[6],
+            'description': title[7]
+        }
+        posts.append(dict)
+    return posts
+
 
 
 def Tags():
