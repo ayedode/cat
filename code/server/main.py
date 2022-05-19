@@ -79,7 +79,7 @@ def TitlesTags(tag):
     logger.debug(tag + " Tag Requested")
     cursor.execute(
         "select feed.titles, feed.url, feed.author, tags.tag, feed.date, feed.imageurl, feed.description from feed inner join connect on feed.id = connect.postid inner join tags on connect.tagsid = tags.id AND tags.tag='{0}';".format(tag))
-    titlaes = cursor.fetchall()
+    titles = cursor.fetchall()
     posts = []
     for title in titles:
         dict = {
