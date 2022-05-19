@@ -55,9 +55,16 @@ def Titles():
 
 
 def Tags():
-    cursor.execute("SELECT id,tag,description FROM TAGS LIMIT 50;")
-    titles = cursor.fetchall()
-    return titles
+    cursor.execute("SELECT tag,description FROM TAGS LIMIT 50;")
+    all_tags = cursor.fetchall()
+    tags  = []
+    for title in all_tags:
+        dict = {
+            'tag': title[0],
+            'description': title[1]
+        }
+        tags.append(dict)
+    return tags
 
 
 def CheckTagExsistence(tag):
